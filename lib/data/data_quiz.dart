@@ -1,0 +1,403 @@
+import 'package:school_super_app/model/model_quiz.dart'; 
+
+class Data {
+  static List<QuizCategory> categories = [
+    QuizCategory(
+      name: 'Matematika',
+      image: '📏',
+      quizSets: [
+        QuizSet(
+          name: 'Ulangan Harian 1',
+          questions: [
+            Question(
+              // question
+              'What is Flutter?',
+              [
+                // options
+                'A UI framework',
+                'A programming language',
+                'An operating system',
+                'None of the above'
+              ],
+              // index of correct
+              0,
+            ),
+            Question(
+              'What language is Flutter written in?',
+              ['Dart', 'Java', 'Kotlin', 'C++'],
+              0,
+            ),
+            Question(
+              'What is hot reload in Flutter?',
+              [
+                'A feature for quickly seeing changes in code',
+                'A widget',
+                'A plugin',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'Which widget is used to display images in Flutter?',
+              ['Image', 'ImageView', 'ImageBox', 'ImageDisplay'],
+              0,
+            ),
+            Question(
+              'What is the purpose of MaterialApp widget in Flutter?',
+              [
+                'To create a Material Design app',
+                'To define app theme',
+                'To handle app routing',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is a StatefulWidget in Flutter?',
+              [
+                'A widget with mutable state',
+                'A static widget',
+                'A stateless widget',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is the purpose of setState() method in Flutter?',
+              [
+                'To update the state of a StatefulWidget',
+                'To build the UI',
+                'To navigate to another screen',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is the purpose of Scaffold widget in Flutter?',
+              [
+                'To implement basic material design layout structure',
+                'To handle user input',
+                'To display images',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is the main function in Flutter?',
+              [
+                'Entry point of the app',
+                'To define app theme',
+                'To define app routing',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is the purpose of pubspec.yaml file in Flutter project?',
+              [
+                'To define project dependencies',
+                'To define UI layout',
+                'To define app theme',
+                'None of the above'
+              ],
+              0,
+            ),
+          ],
+        ),
+        QuizSet(
+          name: 'Ulangan Harian 2',
+          questions: [
+            Question(
+              'What is Flutter?',
+              [
+                'A UI framework',
+                'A programming language',
+                'An operating system',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What language is Flutter written in?',
+              ['Dart', 'Java', 'Kotlin', 'C++'],
+              0,
+            ),
+            Question(
+              'What is hot reload in Flutter?',
+              [
+                'A feature for quickly seeing changes in code',
+                'A widget',
+                'A plugin',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'Which widget is used to display images in Flutter?',
+              ['Image', 'ImageView', 'ImageBox', 'ImageDisplay'],
+              0,
+            ),
+            Question(
+              'What is the purpose of MaterialApp widget in Flutter?',
+              [
+                'To create a Material Design app',
+                'To define app theme',
+                'To handle app routing',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is a StatefulWidget in Flutter?',
+              [
+                'A widget with mutable state',
+                'A static widget',
+                'A stateless widget',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is the purpose of setState() method in Flutter?',
+              [
+                'To update the state of a StatefulWidget',
+                'To build the UI',
+                'To navigate to another screen',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is the purpose of Scaffold widget in Flutter?',
+              [
+                'To implement basic material design layout structure',
+                'To handle user input',
+                'To display images',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is the main function in Flutter?',
+              [
+                'Entry point of the app',
+                'To define app theme',
+                'To define app routing',
+                'None of the above'
+              ],
+              0,
+            ),
+            Question(
+              'What is the purpose of pubspec.yaml file in Flutter project?',
+              [
+                'To define project dependencies',
+                'To define UI layout',
+                'To define app theme',
+                'None of the above'
+              ],
+              0,
+            ),
+          ],
+        ),
+        // Add more quiz sets for Flutter
+      ],
+    ),
+    QuizCategory(
+      name: 'Kimia',
+      image: '🧪',
+      quizSets: [
+        QuizSet(
+          name: 'Quiz Set 1',
+          questions: [
+            // Add questions for Quiz Set 1 of React Native
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 2',
+          questions: [
+            // Add questions for Quiz Set 2 of React Native
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 3',
+          questions: [
+            // Add questions for Quiz Set 3 of React Native
+          ],
+        ),
+      ],
+    ),
+    QuizCategory(
+      name: 'Fisika',
+      image: '⚛️',
+      quizSets: [
+        QuizSet(
+          name: 'Quiz Set 1',
+          questions: [
+            // Add questions for Quiz Set 1 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 2',
+          questions: [
+            // Add questions for Quiz Set 2 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 3',
+          questions: [
+            // Add questions for Quiz Set 3 of Python
+          ],
+        ),
+      ],
+    ),
+    // Add more categories with quiz sets and questions
+    QuizCategory(
+      name: 'Biologi',
+      image: '🧬',
+      quizSets: [
+        QuizSet(
+          name: 'Quiz Set 1',
+          questions: [
+            // Add questions for Quiz Set 1 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 2',
+          questions: [
+            // Add questions for Quiz Set 2 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 3',
+          questions: [
+            // Add questions for Quiz Set 3 of Python
+          ],
+        ),
+      ],
+    ),
+    QuizCategory(
+      name: 'Biologi',
+      image: '🧬',
+      quizSets: [
+        QuizSet(
+          name: 'Quiz Set 1',
+          questions: [
+            // Add questions for Quiz Set 1 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 2',
+          questions: [
+            // Add questions for Quiz Set 2 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 3',
+          questions: [
+            // Add questions for Quiz Set 3 of Python
+          ],
+        ),
+      ],
+    ),
+    QuizCategory(
+      name: 'Biologi',
+      image: '🧬',
+      quizSets: [
+        QuizSet(
+          name: 'Quiz Set 1',
+          questions: [
+            // Add questions for Quiz Set 1 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 2',
+          questions: [
+            // Add questions for Quiz Set 2 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 3',
+          questions: [
+            // Add questions for Quiz Set 3 of Python
+          ],
+        ),
+      ],
+    ),
+    QuizCategory(
+      name: 'Biologi',
+      image: '🧬',
+      quizSets: [
+        QuizSet(
+          name: 'Quiz Set 1',
+          questions: [
+            // Add questions for Quiz Set 1 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 2',
+          questions: [
+            // Add questions for Quiz Set 2 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 3',
+          questions: [
+            // Add questions for Quiz Set 3 of Python
+          ],
+        ),
+      ],
+    ),
+    QuizCategory(
+      name: 'Biologi',
+      image: '🧬',
+      quizSets: [
+        QuizSet(
+          name: 'Quiz Set 1',
+          questions: [
+            // Add questions for Quiz Set 1 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 2',
+          questions: [
+            // Add questions for Quiz Set 2 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 3',
+          questions: [
+            // Add questions for Quiz Set 3 of Python
+          ],
+        ),
+      ],
+    ),
+    QuizCategory(
+      name: 'Biologi',
+      image: '🧬',
+      quizSets: [
+        QuizSet(
+          name: 'Quiz Set 1',
+          questions: [
+            // Add questions for Quiz Set 1 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 2',
+          questions: [
+            // Add questions for Quiz Set 2 of Python
+          ],
+        ),
+        QuizSet(
+          name: 'Quiz Set 3',
+          questions: [
+            // Add questions for Quiz Set 3 of Python
+          ],
+        ),
+      ],
+    ),
+    // Add more categories with quiz sets and questions
+    
+
+    
+  ];
+}
