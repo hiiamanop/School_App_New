@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:school_super_app/pages/Kelas/Input_Kelas.dart';
 import 'package:school_super_app/pages/homePage.dart';
 import 'package:school_super_app/pages/profilePage.dart';
 import 'package:school_super_app/pages/settingPage.dart';
@@ -16,7 +17,7 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   int _currentIndex = 1;
   List<Widget> widgetList = const [
-    SettingPage(),
+    InputKelas(),
     HomePage(),
     ProfilePage()
   ];
@@ -34,7 +35,7 @@ class _NavbarState extends State<Navbar> {
           });
         },
         items: [
-          Icon(Icons.settings, color: Colors.grey[500]),
+          Icon(Icons.list, color: Colors.grey[500]),
           Icon(Icons.home, color: Colors.grey[500]),
           Icon(Icons.person, color: Colors.grey[500]),
         ],

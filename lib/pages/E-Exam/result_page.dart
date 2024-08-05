@@ -47,7 +47,7 @@ class ResultPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Nilai Mu"),
+                  Text("Nilai Mu", style : blackTextStyle),
                   Text(
                     feedback,
                     style: whiteTextStyle.copyWith(
@@ -56,7 +56,7 @@ class ResultPage extends StatelessWidget {
                   SizedBox(
                     height: 10,
                   ),
-                  Text("${totalScore} / ${totalQuestions  * 10}"),
+                  Text("${totalScore} / ${totalQuestions  * 10}", style : blackTextStyle),
                   SizedBox(
                     height: 10,
                   ),

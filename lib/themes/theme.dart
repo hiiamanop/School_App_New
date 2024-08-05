@@ -14,7 +14,7 @@ Color whiteColor = Color(0XFFFFFFFF);
 Color magentaColor = Color(0XFFC42978);
 Color orangeColor = Color(0XFFF68728);
 Color aquaColor = Color(0XFF2E9FF3);
-Color bgColor = Color(0XFFF4F3EF);
+Color bgColor = Color(0XFF095F59);
 Color borderColor = Color(0XCFFCDCDCD);
 Color bannerColor = Color(0XFF00487C).withOpacity(0.71);
 
