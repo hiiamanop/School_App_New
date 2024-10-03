@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final Color buttonColor;
   final double buttonWidth;
-  final double buttonHeight;
   final double buttonMargin;
   final Widget child;
   final VoidCallback onTap;
@@ -12,7 +11,6 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.buttonColor,
     required this.buttonWidth,
-    required this.buttonHeight,
     required this.buttonMargin,
     required this.child,
     required this.onTap,
@@ -23,13 +21,12 @@ class CustomButton extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(buttonMargin),
       width: buttonWidth,
-      height: buttonHeight,
       decoration: BoxDecoration(
         color: buttonColor,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.black.withOpacity(0.2),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3),

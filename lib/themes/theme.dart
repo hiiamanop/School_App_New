@@ -14,9 +14,9 @@ Color whiteColor = Color(0XFFFFFFFF);
 Color magentaColor = Color(0XFFC42978);
 Color orangeColor = Color(0XFFF68728);
 Color aquaColor = Color(0XFF2E9FF3);
-Color bgColor = Color(0XFF095F59);
+Color bgColor = Color(0XFF276428);
 Color borderColor = Color(0XCFFCDCDCD);
-Color bannerColor = Color(0XFF00487C).withOpacity(0.71);
+Color bannerColor = Color(0XFF06294c).withOpacity(0.71);
 
 // font
 TextStyle primaryTextStyle = GoogleFonts.outfit(color: primaryColor);

@@ -19,13 +19,13 @@ class _NavbarState extends State<Navbar> {
   List<Widget> widgetList = const [
     InputKelas(),
     HomePage(),
-    ProfilePage()
+    SettingPage()
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: bannerColor ??
+        backgroundColor: bgColor.withOpacity(0.7) ??
             Colors
                 .white, // Provide a default color if Colors.grey[100] is nullable
         index: _currentIndex,
@@ -37,7 +37,7 @@ class _NavbarState extends State<Navbar> {
         items: [
           Icon(Icons.list, color: Colors.grey[500]),
           Icon(Icons.home, color: Colors.grey[500]),
-          Icon(Icons.person, color: Colors.grey[500]),
+          Icon(Icons.settings, color: Colors.grey[500]),
         ],
       ),
       body: Center(

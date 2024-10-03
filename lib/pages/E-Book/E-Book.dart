@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:path/path.dart';
@@ -8,17 +7,14 @@ import 'package:school_super_app/themes/theme.dart';
 class Ebook extends StatefulWidget {
   final File file;
 
-  const Ebook({
-    Key? key,
-    required this.file,
-  }) : super(key: key);
+  const Ebook({Key? key, required this.file}) : super(key: key);
 
   @override
   State<Ebook> createState() => _EbookState();
 }
 
 class _EbookState extends State<Ebook> {
-  late PDFViewController controller; // Declare controller as late
+  late PDFViewController controller;
   int pages = 0;
   int indexPage = 0;
 
@@ -28,40 +24,40 @@ class _EbookState extends State<Ebook> {
     final text = '${indexPage + 1} of $pages';
 
     return Scaffold(
-      backgroundColor: whiteColor,
       appBar: AppBar(
-        title: Text(name),
         backgroundColor: whiteColor,
-        iconTheme: IconThemeData(
-          color: Colors.indigo, // Change back button color to indigo
-        ),
+        title: Text(name),
         actions: [
-          if (pages >= 2) // Ensure actions is a list of widgets
+          if (pages >= 2) 
             Center(child: Text(text)),
           IconButton(
-            icon: Icon(Icons.chevron_left, size: 32),
+            icon: Icon(Icons.chevron_left),
             onPressed: () {
-              final page = indexPage == 0 ? pages : indexPage - 1;
-              controller.setPage(page);
+              if (indexPage > 0) {
+                final page = indexPage - 1;
+                controller.setPage(page);
+              }
             },
           ),
           IconButton(
-            icon: Icon(Icons.chevron_right, size: 32),
+            icon: Icon(Icons.chevron_right),
             onPressed: () {
-              final page = indexPage == pages - 1 ? 0 : indexPage + 1;
-              controller.setPage(page);
+              if (indexPage < pages - 1) {
+                final page = indexPage + 1;
+                controller.setPage(page);
+              }
             },
           ),
         ],
       ),
       body: PDFView(
         filePath: widget.file.path,
-        onRender: (pages) => setState(() => this.pages = pages ?? 0), // Handle nullable integer
-        onViewCreated: (controller) =>
-            setState(() => this.controller = controller), // Initialize controller
-        onPageChanged: (indexPage, _) =>
-            setState(() => this.indexPage = indexPage ?? 0), // Handle nullable integer
-        // autoSpacing: false,
+        onRender: (pages) => setState(() => this.pages = pages ?? 0),
+        onViewCreated: (controller) => setState(() {
+          this.controller = controller;
+          controller.setPage(indexPage); // Set initial page to the current index
+        }),
+        onPageChanged: (indexPage, _) => setState(() => this.indexPage = indexPage ?? 0),
         swipeHorizontal: true,
       ),
     );

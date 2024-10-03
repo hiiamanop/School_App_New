@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:school_super_app/controllers/auth_controller.dart';
 import 'package:school_super_app/themes/theme.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,8 +11,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
+    // buat variable untuk memanggil auth_contorller yang sudah dibuat
+    final authC = Get.put(AuthController());
+
     return Scaffold(
       backgroundColor: bgColor,
       body: Padding(
@@ -34,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Row(
                     children: [
-                      Text("NIS",
+                      Text("Email",
                           style: blackTextStyle.copyWith(
                               fontSize: 14, fontWeight: FontWeight.w600)),
                     ],
@@ -43,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 10,
                   ),
                   TextFormField(
+                    controller: authC.email,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         enabledBorder: OutlineInputBorder(
@@ -51,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                             borderSide: BorderSide(color: borderColor)),
-                        hintText: "Masukan NIS",
+                        hintText: "Masukan Email",
                         hintStyle: greyTextStyle),
                   ),
                   SizedBox(
@@ -68,10 +76,21 @@ class _LoginPageState extends State<LoginPage> {
                     height: 10,
                   ),
                   TextFormField(
-                    obscureText: true,
+                    controller: authC.password,
+                    obscureText: _isObscure,
                     decoration: InputDecoration(
                         suffixIcon: IconButton(
-                            onPressed: null, icon: Icon(Icons.visibility)),
+                          icon: Icon(
+                            _isObscure
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isObscure = !_isObscure;
+                            });
+                          },
+                        ),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5),
                             borderSide: BorderSide(color: borderColor)),
@@ -99,27 +118,30 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
-                  
-                  Container(
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: bgColor,
+
+                  // button login
+                  Obx(() => Container(
+                        height: 60,
+                        width: 250,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: bgColor,
+                          ),
+                          onPressed: () {
+                            authC.login();
+                          },
+                          child: authC.isLoading == true
+                              ? CircularProgressIndicator(
+                                  color: whiteColor,
+                                )
+                              : Text(
+                                  "Masuk",
+                                  style: whiteTextStyle,
+                                ),
                         ),
-                        onPressed: () {
-                          // authC.login();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Masuk',
-                              style: whiteTextStyle,
-                            ),
-                          ],
-                        )),
-                  ),
+                      )),
                 ],
               ),
             ),

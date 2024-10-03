@@ -41,7 +41,6 @@ class ExamListPage extends StatelessWidget {
                         child: CustomButton(
                             buttonColor: whiteColor,
                             buttonWidth: double.infinity,
-                            buttonHeight: 40,
                             buttonMargin: 10,
                             child: Row(
                               children: [

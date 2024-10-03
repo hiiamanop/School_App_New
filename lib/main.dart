@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';  // Import GetX
 import 'package:school_super_app/auth/login.dart';
 import 'package:school_super_app/components/navbar.dart';
 import 'package:school_super_app/pages/Kelas/Input_Kelas.dart';
 import 'package:school_super_app/pages/homePage.dart';
+import 'package:school_super_app/pages/settingPage.dart';
 import 'package:school_super_app/pages/splashPage.dart';
 
 void main() {
@@ -12,11 +14,15 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-       home: SplashPage(),
+    return GetMaterialApp(  // Replacing MaterialApp with GetMaterialApp
+      home: Navbar(),    // Your initial page
+      // Optionally, you can add named routes for navigation
+      // getPages: [
+      //   GetPage(name: '/login', page: () => LoginPage()),
+      //   GetPage(name: '/navbar', page: () => Navbar()),
+      // ],
     );
   }
 }
