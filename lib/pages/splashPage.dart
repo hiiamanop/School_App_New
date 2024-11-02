@@ -15,15 +15,15 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    // Trigger the animation after the widget is built
+    // Memicu animasi setelah widget dibangun
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         _opacity = 1.0;
       });
     });
-    // Navigate to LoginPage after a delay
+    // Menavigasi ke LoginPage setelah jeda 3 detik
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.of(context).push(_createRoute());
+      Navigator.of(context).pushReplacement(_createRoute());
     });
   }
 
@@ -31,34 +31,20 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor,
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(25, 60, 25, 30),
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12), color: whiteColor),
-          width: double.infinity,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AnimatedOpacity(
-                  opacity: _opacity,
-                  duration: Duration(seconds: 1),
-                  child: Image(
-                    image: AssetImage('asset/images/logo sekolah.png'),
-                    width: 100,
-                  ),
-                ),
-                SizedBox(height: 20),
-              ],
-            ),
+      body: Center(
+        child: AnimatedOpacity(
+          opacity: _opacity,
+          duration: Duration(seconds: 1),
+          child: Image.asset(
+            'asset/images/logo sekolah.png',
+            width: 100,
           ),
         ),
       ),
     );
   }
 
-  // Create a route with a custom transition
+  // Membuat transisi dengan efek Fade
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => LoginPage(),

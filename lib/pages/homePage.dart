@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:school_super_app/components/customButton.dart';
 import 'package:school_super_app/components/customContainer.dart';
-import 'package:school_super_app/pages/E-Book/listKelasPage.dart';
+import 'package:school_super_app/pages/E-Book/BookListPage.dart';
 import 'package:school_super_app/pages/E-Exam/exam_landing_page.dart';
 import 'package:school_super_app/pages/E-Task/taskLandingPage.dart';
 import 'package:school_super_app/pages/calendar/calendarPage.dart';
@@ -29,7 +29,9 @@ class WaveClipper extends CustomClipper<Path> {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final String userId; // Tambahkan userId
+
+  const HomePage({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -37,19 +39,21 @@ class HomePage extends StatelessWidget {
       backgroundColor: whiteColor,
       body: Container(
         child: Stack(children: [
+          Container(
+            color: whiteColor,
+          ),
           // background
-          Opacity(
-              opacity: 0.7,
+          Container(
               child: ClipPath(
-                clipper: WaveClipper(),
-                child: Container(
-                  color: bgColor,
-                  height: MediaQuery.of(context).size.height * 0.33,
-                ),
-              )),
+            clipper: WaveClipper(),
+            child: Container(
+              color: bgColor2,
+              height: MediaQuery.of(context).size.height * 0.33,
+            ),
+          )),
           Container(
             child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 10, 15, 15),
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                 child: ListView(
                   children: [
                     // header
@@ -76,18 +80,22 @@ class HomePage extends StatelessWidget {
                           containerMargin: 5,
                           child: DateRow(),
                         ),
-                        CustomButton(
-                          onTap: () => Navigator.push(
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ProfilePage())),
-                          buttonColor: whiteColor,
-                          buttonWidth: 45,
-                          buttonMargin: 5,
-                          child: Icon(
-                            Icons.person,
-                            size: 16.5,
-                            color: secondaryColor,
+                                builder: (context) =>
+                                    ProfilePage(userId: userId),
+                              ),
+                            );
+                          },
+                          child: Icon(Icons.person),
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor:  Colors.blue, // Warna tombol
+                            backgroundColor: Colors.white, // Warna teks
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
                           ),
                         ),
                       ],
@@ -159,8 +167,6 @@ class HomePage extends StatelessWidget {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.03,
                     ),
-
-                    // mata pelajaran
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -372,7 +378,7 @@ class HomePage extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              ListKelasEbook()))),
+                                              BookListPage()))),
                               SizedBox(
                                 height: 8,
                               ),
@@ -380,7 +386,7 @@ class HomePage extends StatelessWidget {
                                 children: [
                                   Text(
                                     'E-Book',
-                                    style: greyTextStyle,
+                                    style: blackTextStyle,
                                   )
                                 ],
                               )
@@ -424,7 +430,7 @@ class HomePage extends StatelessWidget {
                                 children: [
                                   Text(
                                     'E-Task',
-                                    style: greyTextStyle,
+                                    style: blackTextStyle,
                                   )
                                 ],
                               )
@@ -466,7 +472,7 @@ class HomePage extends StatelessWidget {
                                 children: [
                                   Text(
                                     'E-Exam',
-                                    style: greyTextStyle,
+                                    style: blackTextStyle,
                                   )
                                 ],
                               )
@@ -508,7 +514,7 @@ class HomePage extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Kalender',
-                                    style: greyTextStyle,
+                                    style: blackTextStyle,
                                   )
                                 ],
                               )
@@ -558,7 +564,7 @@ class HomePage extends StatelessWidget {
                               )
                             ],
                           ),
-                        ))
+                        )),
                   ],
                 )),
           ),

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:school_super_app/pages/Kelas/Input_Kelas.dart';
+import 'package:school_super_app/pages/Enrollment/Enrollment_views.dart';
 import 'package:school_super_app/pages/homePage.dart';
-import 'package:school_super_app/pages/profilePage.dart';
 import 'package:school_super_app/pages/settingPage.dart';
 import 'package:school_super_app/themes/theme.dart';
 
-
 class Navbar extends StatefulWidget {
-  const Navbar({super.key});
+  final String userId; // Tambahkan userId sebagai parameter
+
+  const Navbar({required this.userId, super.key});
 
   @override
   State<Navbar> createState() => _NavbarState();
@@ -16,18 +16,26 @@ class Navbar extends StatefulWidget {
 
 class _NavbarState extends State<Navbar> {
   int _currentIndex = 1;
-  List<Widget> widgetList = const [
-    InputKelas(),
-    HomePage(),
-    SettingPage()
-  ];
+
+  // Tidak dideklarasikan di luar metode build karena userId berasal dari widget
+  late List<Widget> widgetList;
+
+  @override
+  void initState() {
+    super.initState();
+    // Inisialisasi widgetList di initState atau di dalam build
+    widgetList = [
+      EnrollmentView(userId: widget.userId),
+      HomePage(userId: widget.userId),
+      SettingPage(),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: bgColor.withOpacity(0.7) ??
-            Colors
-                .white, // Provide a default color if Colors.grey[100] is nullable
+        backgroundColor: bgColor.withOpacity(0.7),
         index: _currentIndex,
         onTap: (index) {
           setState(() {

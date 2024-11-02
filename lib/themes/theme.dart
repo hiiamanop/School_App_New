@@ -9,12 +9,14 @@ Color secondaryColor = Color(0XFF003B81);
 Color blackColor = Color(0XFF000000);
 Color greyColor = Color(0XFF9F9F9F);
 Color greenColor = Color(0XFFADCC57);
+Color greenColor2 = Color(0XFFf1f695);
 Color redColor = Color(0XFFD23030);
 Color whiteColor = Color(0XFFFFFFFF);
 Color magentaColor = Color(0XFFC42978);
 Color orangeColor = Color(0XFFF68728);
 Color aquaColor = Color(0XFF2E9FF3);
 Color bgColor = Color(0XFF276428);
+Color bgColor2 = Color.fromARGB(255, 27, 106, 29);
 Color borderColor = Color(0XCFFCDCDCD);
 Color bannerColor = Color(0XFF06294c).withOpacity(0.71);
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:school_super_app/auth/login.dart';
 import 'package:school_super_app/components/customContainer.dart';
 import 'package:school_super_app/model/model_quiz.dart';
-import 'package:school_super_app/pages/E-Exam/examPage.dart';
-import 'package:school_super_app/pages/homePage.dart';
 import 'package:school_super_app/themes/theme.dart';
 
 class ResultPage extends StatelessWidget {
@@ -63,7 +62,7 @@ class ResultPage extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => HomePage()));
+                          MaterialPageRoute(builder: (context) => LoginPage()));
                     },
                     child: CustomContainer(
                         containerColor: whiteColor,

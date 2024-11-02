@@ -1,4 +1,7 @@
+// auth_controller.dart
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -9,93 +12,120 @@ import 'package:school_super_app/themes/theme.dart';
 import 'package:sp_util/sp_util.dart';
 
 class AuthController extends GetxController {
-  // Text editing controllers for input fields
-  TextEditingController email =
-      TextEditingController(text: SpUtil.getString("email") ?? "");
-  TextEditingController password =
-      TextEditingController(text: SpUtil.getString("password") ?? "");
-
-  // RxBool to track loading state
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
   RxBool isLoading = false.obs;
 
-  // Function for user login
   Future<void> login() async {
-    var url = Uri.parse(Config().urlLogin);
+    var url = Uri.parse(Config().loginUrl);
+
+    if (email.text.isEmpty || password.text.isEmpty) {
+      _showError("Email dan password tidak boleh kosong");
+      return;
+    }
 
     try {
       isLoading.value = true;
-      final response = await http.post(url, body: {
-        'email': email.text,
-        'password': password.text,
-      });
+      
+      final response = await http.post(
+        url,
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'email': email.text,
+          'password': password.text,
+        }),
+      ).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          throw TimeoutException('Koneksi timeout. Periksa koneksi internet Anda.');
+        },
+      );
 
-      var responseDecode = json.decode(response.body);
-
-      if (response.statusCode == 200 && responseDecode['success'] == true) {
-        var user = responseDecode['data']; // Accessing 'data' instead of 'user'
-
-        SpUtil.putString("email", email.text);
-        SpUtil.putString("password", password.text);
-        SpUtil.putInt("id_user", user["id"]);
-        SpUtil.putString("nama_user", user["name"]);
-        SpUtil.putString("email_user", user["email"]);
-        SpUtil.putString("nomor_induk", user["nomor_induk"]);
-        SpUtil.putString("tahun_masuk", user["tahun_masuk"]);
-
-        isLoading.value = false;
-        Get.offAll(Navbar());
-      } else {
-        isLoading.value = false;
-        Get.snackbar("Error", responseDecode["message"] ?? "Unknown error",
-            backgroundColor: redColor,
-            colorText: whiteColor,
-            snackPosition: SnackPosition.TOP,
-            margin: EdgeInsets.all(10));
+      print('Login Response: ${response.body}');
+      
+      Map<String, dynamic> responseDecode;
+      try {
+        responseDecode = json.decode(response.body);
+      } catch (e) {
+        throw Exception('Invalid response format from server');
       }
+
+      if (response.statusCode == 200 && responseDecode['status'] == 'success') {
+        await _handleSuccessfulLogin(responseDecode);
+      } else {
+        throw Exception(responseDecode["message"] ?? "Login gagal");
+      }
+    } on SocketException catch (e) {
+      _showError("Tidak dapat terhubung ke server. Periksa koneksi internet Anda.");
+    } on TimeoutException catch (e) {
+      _showError(e.message ?? "Koneksi timeout");
+    } on FormatException catch (e) {
+      _showError("Format response tidak valid");
     } catch (e) {
+      _showError(e.toString());
+    } finally {
       isLoading.value = false;
-      print(e.toString());
     }
   }
 
-  // Function for user logout
-  Future<void> logout() async {
-    var url = Uri.parse(Config().urlLogout);
-
+  // Perbaikan pada method _handleSuccessfulLogin
+  Future<void> _handleSuccessfulLogin(Map<String, dynamic> response) async {
     try {
-      final response = await http.get(url, headers: {
-        'Authorization': 'Bearer ${SpUtil.getString("access_token")}'
-      });
-      var responseDecode = json.decode(response.body);
+      var user = response['data'];
+      var userId = response['user_id'].toString();
 
-      if (response.statusCode == 200) {
-        SpUtil.remove("id_user");
-        SpUtil.remove("nama_user");
-        SpUtil.remove("email_user");
-        SpUtil.remove("nomor_induk");
-        SpUtil.remove("tahun_masuk");
-        SpUtil.remove("access_token");
+      // Simpan data user satu per satu
+      await SpUtil.putString("id_user", userId);
+      await SpUtil.putString("nama_user", user["name"]);
+      await SpUtil.putString("email_user", user["email"]);
+      await SpUtil.putString("nomor_induk", user["nomor_induk"]);
+      await SpUtil.putString("tahun_masuk", user["tahun_masuk"]);
+      await SpUtil.putInt("role_id", user["role_id"]);
 
-        Get.snackbar("Success", responseDecode["message"],
-            backgroundColor: greenColor,
-            colorText: whiteColor,
-            snackPosition: SnackPosition.TOP,
-            margin: EdgeInsets.all(10));
+      print('Saved User ID: ${SpUtil.getString("id_user")}');
 
-        Get.offAll(SplashPage());
-      } else {
-        Get.snackbar("Error", responseDecode['message'],
-            backgroundColor: redColor,
-            colorText: whiteColor,
-            snackPosition: SnackPosition.TOP,
-            margin: EdgeInsets.all(10));
-      }
+      Get.offAll(() => Navbar(userId: userId));
+      _showSuccess("Login berhasil");
     } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          backgroundColor: redColor,
-          colorText: whiteColor,
-          snackPosition: SnackPosition.TOP,
-          margin: EdgeInsets.all(10));
+      throw Exception("Gagal menyimpan data pengguna: ${e.toString()}");
+    }
+  }
+
+  void _showError(String message) {
+    Get.snackbar(
+      "Error",
+      message,
+      backgroundColor: redColor,
+      colorText: whiteColor,
+      snackPosition: SnackPosition.TOP,
+      margin: const EdgeInsets.all(10),
+      duration: const Duration(seconds: 3),
+    );
+  }
+
+  void _showSuccess(String message) {
+    Get.snackbar(
+      "Success",
+      message,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      snackPosition: SnackPosition.TOP,
+      margin: const EdgeInsets.all(10),
+      duration: const Duration(seconds: 3),
+    );
+  }
+
+  Future<void> logout() async {
+    try {
+      await SpUtil.clear();
+      Get.offAll(() => SplashPage());
+      _showSuccess("Logout berhasil");
+    } catch (e) {
+      print('Error during logout: $e');
+      _showError("Gagal melakukan logout");
     }
   }
 }

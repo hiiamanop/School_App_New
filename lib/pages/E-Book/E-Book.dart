@@ -17,6 +17,7 @@ class _EbookState extends State<Ebook> {
   late PDFViewController controller;
   int pages = 0;
   int indexPage = 0;
+  bool isError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,38 +29,73 @@ class _EbookState extends State<Ebook> {
         backgroundColor: whiteColor,
         title: Text(name),
         actions: [
-          if (pages >= 2) 
+          if (pages >= 2 && !isError) 
             Center(child: Text(text)),
-          IconButton(
-            icon: Icon(Icons.chevron_left),
-            onPressed: () {
-              if (indexPage > 0) {
-                final page = indexPage - 1;
-                controller.setPage(page);
-              }
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.chevron_right),
-            onPressed: () {
-              if (indexPage < pages - 1) {
-                final page = indexPage + 1;
-                controller.setPage(page);
-              }
-            },
-          ),
+          if (!isError) ...[
+            IconButton(
+              icon: Icon(Icons.chevron_left),
+              onPressed: () {
+                if (indexPage > 0) {
+                  final page = indexPage - 1;
+                  controller.setPage(page);
+                }
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.chevron_right),
+              onPressed: () {
+                if (indexPage < pages - 1) {
+                  final page = indexPage + 1;
+                  controller.setPage(page);
+                }
+              },
+            ),
+          ],
         ],
       ),
-      body: PDFView(
-        filePath: widget.file.path,
-        onRender: (pages) => setState(() => this.pages = pages ?? 0),
-        onViewCreated: (controller) => setState(() {
-          this.controller = controller;
-          controller.setPage(indexPage); // Set initial page to the current index
-        }),
-        onPageChanged: (indexPage, _) => setState(() => this.indexPage = indexPage ?? 0),
-        swipeHorizontal: true,
-      ),
+      body: isError 
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error, color: Colors.red, size: 60),
+                  SizedBox(height: 16),
+                  Text(
+                    'Failed to load the PDF file',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () => setState(() {
+                      isError = false;
+                    }),  // Retry button, resets error state
+                    child: Text('Retry'),
+                  ),
+                ],
+              ),
+            )
+          : PDFView(
+              filePath: widget.file.path,
+              onRender: (pages) => setState(() => this.pages = pages ?? 0),
+              onViewCreated: (controller) => setState(() {
+                this.controller = controller;
+                controller.setPage(indexPage); // Set initial page to the current index
+              }),
+              onPageChanged: (indexPage, _) => setState(() => this.indexPage = indexPage ?? 0),
+              swipeHorizontal: true,
+              onError: (error) {
+                print(error.toString());
+                setState(() {
+                  isError = true;  // If an error occurs, set the error flag
+                });
+              },
+              onPageError: (page, error) {
+                print('Error on page $page: $error');
+                setState(() {
+                  isError = true;  // Handle page-specific error
+                });
+              },
+            ),
     );
   }
 }
